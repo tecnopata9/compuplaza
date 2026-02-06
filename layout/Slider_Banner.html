@@ -1,0 +1,163 @@
+<style>
+    .slide-fade {
+        transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Clase para la animación de entrada del texto */
+    .text-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease-out 0.3s;
+    }
+
+    .active .text-reveal {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Barra de progreso animada */
+    @keyframes progress {
+        from {
+            width: 0%;
+        }
+
+        to {
+            width: 100%;
+        }
+    }
+
+    .progress-running {
+        animation: progress 5s linear forwards;
+    }
+</style>
+
+<section class="relative h-[70vh] md:h-[80vh] overflow-hidden bg-slate-950" id="image-slider">
+    <div id="slides-container" class="relative w-full h-full">
+    </div>
+
+    <button onclick="changeSlide(-1)" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 group z-30">
+        <i data-lucide="chevron-left" class="w-6 h-6 group-hover:-translate-x-0.5 transition-transform"></i>
+    </button>
+    <button onclick="changeSlide(1)" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 group z-30">
+        <i data-lucide="chevron-right" class="w-6 h-6 group-hover:translate-x-0.5 transition-transform"></i>
+    </button>
+
+    <div id="dots-container" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 z-30">
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-800 z-30">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-amber-400 w-0"></div>
+    </div>
+</section>
+
+<script>
+    const images = [{
+            url: "img/banner/banner1.webp",
+            title: "Espacios de Trabajo Modernos",
+            subtitle: "Diseñados para la productividad"
+        },
+        {
+            url: "img/banner/banner2.webp",
+            title: "Innovación Tecnológica",
+            subtitle: "Soluciones del futuro, hoy"
+        },
+        {
+            url: "img/banner/banner3.webp",
+            title: "Colaboración Global",
+            subtitle: "Conectando equipos en todo el mundo"
+        },
+        {
+            url: "img/banner/banner4.webp",
+            title: "Estrategia Empresarial",
+            subtitle: "Planificación para el éxito"
+        }
+    ];
+
+    let currentIndex = 0;
+    let timer;
+    const interval = 5000;
+
+    function initSlider() {
+        const container = document.getElementById('slides-container');
+        const dotsContainer = document.getElementById('dots-container');
+
+        images.forEach((img, index) => {
+            // Crear Slide
+            const slide = document.createElement('div');
+            slide.className = `absolute inset-0 transition-opacity duration-700 ease-in-out ${index === 0 ? 'opacity-100 active z-10' : 'opacity-0 z-0'}`;
+            slide.id = `slide-${index}`;
+            slide.innerHTML = `
+                    <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950/60 to-transparent"></div>
+                    <div class="absolute bottom-20 left-0 right-0 px-6 lg:px-16 text-reveal-container">
+                        <div class="max-w-4xl">
+                            <h3 class="text-4xl md:text-6xl font-bold text-white mb-4 text-reveal">${img.title}</h3>
+                            <p class="text-xl md:text-2xl text-slate-300 text-reveal" style="transition-delay: 0.4s">${img.subtitle}</p>
+                        </div>
+                    </div>
+                `;
+            container.appendChild(slide);
+
+            // Crear Dot
+            const dot = document.createElement('button');
+            dot.className = `transition-all duration-300 rounded-full ${index === 0 ? 'w-8 h-3 bg-amber-500' : 'w-3 h-3 bg-white/30'}`;
+            dot.onclick = () => goToSlide(index);
+            dot.id = `dot-${index}`;
+            dotsContainer.appendChild(dot);
+        });
+
+        startTimer();
+        lucide.createIcons();
+    }
+
+    function startTimer() {
+        resetProgressBar();
+        timer = setInterval(() => {
+            changeSlide(1);
+        }, interval);
+    }
+
+    function resetProgressBar() {
+        const bar = document.getElementById('progress-bar');
+        bar.classList.remove('progress-running');
+        void bar.offsetWidth; // Force reflow
+        bar.classList.add('progress-running');
+    }
+
+    function updateUI() {
+        images.forEach((_, index) => {
+            const slide = document.getElementById(`slide-${index}`);
+            const dot = document.getElementById(`dot-${index}`);
+
+            if (index === currentIndex) {
+                slide.classList.replace('opacity-0', 'opacity-100');
+                slide.classList.add('active', 'z-10');
+                dot.classList.replace('w-3', 'w-8');
+                dot.classList.replace('bg-white/30', 'bg-amber-500');
+            } else {
+                slide.classList.replace('opacity-100', 'opacity-0');
+                slide.classList.remove('active', 'z-10');
+                dot.classList.replace('w-8', 'w-3');
+                dot.classList.replace('bg-amber-500', 'bg-white/30');
+            }
+        });
+        resetProgressBar();
+    }
+
+    function changeSlide(direction) {
+        currentIndex = (currentIndex + direction + images.length) % images.length;
+        clearInterval(timer);
+        updateUI();
+        startTimer();
+    }
+
+    function goToSlide(index) {
+        currentIndex = index;
+        clearInterval(timer);
+        updateUI();
+        startTimer();
+    }
+
+    document.addEventListener('DOMContentLoaded', initSlider);
+</script>
