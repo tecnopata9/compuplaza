@@ -1,0 +1,180 @@
+<style>
+    .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+    }
+
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .reveal-left {
+        transform: translateX(-50px);
+    }
+
+    .reveal-right {
+        transform: translateX(50px);
+    }
+</style>
+
+<section id="about" class="py-24 lg:py-32 bg-white relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-amber-50 to-transparent opacity-50"></div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-amber-100 rounded-full blur-3xl opacity-30"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <div class="text-center mb-20 reveal">
+            <span class="inline-block px-4 py-2 rounded-full bg-amber-100 text-amber-700 text-sm font-semibold mb-6">
+                Quiénes Somos
+            </span>
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6">
+                Más de <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">18 años</span>
+                <br>transformando empresas
+            </h2>
+            <p class="max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed">
+                Somos una empresa líder en consultoría y servicios empresariales, dedicada a transformar organizaciones y potenciar su crecimiento a través de soluciones innovadoras y estrategias probadas.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-16 items-center mb-24">
+            <div class="relative reveal reveal-left">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" alt="Team collaboration" class="w-full h-[500px] object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                </div>
+
+                <div class="absolute -bottom-8 -right-8 bg-white rounded-2xl shadow-xl p-6 max-w-xs reveal" style="transition-delay: 0.6s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
+                            <i data-lucide="award" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-slate-900">
+                                <span class="counter" data-target="500">0</span>+
+                            </div>
+                            <div class="text-sm text-slate-500">Proyectos Exitosos</div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600">Cada proyecto es una historia de éxito que nos impulsa a seguir innovando.</p>
+                </div>
+
+                <div class="absolute -top-6 -left-6 w-24 h-24 border-4 border-amber-200 rounded-2xl"></div>
+            </div>
+
+            <div class="space-y-8 reveal reveal-right">
+                <div class="group p-6 rounded-2xl bg-slate-50 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 transition-all duration-500 border border-transparent hover:border-amber-200">
+                    <div class="flex items-start gap-5">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="target" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Misión</h3>
+                            <p class="text-slate-600 leading-relaxed">Impulsar el crecimiento empresarial a través de soluciones innovadoras y estrategias personalizadas que generen valor real.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="group p-6 rounded-2xl bg-slate-50 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 transition-all duration-500 border border-transparent hover:border-amber-200">
+                    <div class="flex items-start gap-5">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="eye" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Visión</h3>
+                            <p class="text-slate-600 leading-relaxed">Ser reconocidos como líderes en transformación empresarial, estableciendo nuevos estándares.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="group p-6 rounded-2xl bg-slate-50 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 transition-all duration-500 border border-transparent hover:border-amber-200">
+                    <div class="flex items-start gap-5">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="gem" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Valores</h3>
+                            <p class="text-slate-600 leading-relaxed">Integridad, innovación, excelencia y compromiso son los pilares que guían cada una de nuestras acciones.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 p-8">
+
+            <div class="bg-[#1a2233] rounded-2xl p-8 flex flex-col items-center justify-center text-center">
+                <div class="bg-[#332b21] w-16 h-16 rounded-xl mb-4 flex items-center justify-center">
+                    <i data-lucide="trending-up" class="w-8 h-8 text-amber-500"></i>
+                </div>
+
+                <h3 class="text-white text-4xl font-bold mb-2">100%</h3>
+                <p class="text-gray-400 text-sm">Tasa de Éxito</p>
+            </div>
+
+            <div class="bg-[#1a2233] rounded-2xl p-8 flex flex-col items-center justify-center text-center">
+                <div class="bg-[#332b21] w-16 h-16 rounded-xl mb-4 flex items-center justify-center">                    
+                    <i data-lucide="users" class="w-8 h-8 text-amber-500"></i>
+                </div>   
+            
+                <h3 class="text-white text-4xl font-bold mb-2">10+</h3>
+                <p class="text-gray-400 text-sm">Expertos</p>
+            </div>
+
+            <div class="bg-[#1a2233] rounded-2xl p-8 flex flex-col items-center justify-center text-center">
+                <div class="bg-[#332b21] w-16 h-16 rounded-xl mb-4 flex items-center justify-center">                      
+                    <i data-lucide="award" class="w-8 h-8 text-amber-500"></i>
+                </div>
+                <h3 class="text-white text-4xl font-bold mb-2">5+</h3>
+                <p class="text-gray-400 text-sm">Certificaciones</p>
+            </div>
+
+            <div class="bg-[#1a2233] rounded-2xl p-8 flex flex-col items-center justify-center text-center">
+                <div class="bg-[#332b21] w-16 h-16 rounded-xl mb-4 flex items-center justify-center">  
+                    <i data-lucide="zap" class="w-8 h-8 text-amber-500"></i>
+                </div>
+                <h3 class="text-white text-4xl font-bold mb-2">24/7</h3>
+                <p class="text-gray-400 text-sm">Soporte</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<script>
+    lucide.createIcons();
+
+    // Lógica de Animación al hacer Scroll (Intersection Observer)
+    const observerOptions = {
+        threshold: 0.1
+    };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Si el elemento tiene contadores, iniciarlos
+                const counters = entry.target.querySelectorAll('.counter');
+                counters.forEach(counter => animateCounter(counter));
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Lógica de Conteo (CountUp)
+    function animateCounter(counter) {
+        const target = +counter.getAttribute('data-target');
+        const duration = 2000; // 2 segundos
+        const startTime = performance.now();
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            counter.innerText = Math.floor(progress * target);
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+        requestAnimationFrame(update);
+    }
+</script>
