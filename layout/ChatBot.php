@@ -1,0 +1,181 @@
+<style>
+    .chat-window {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .chat-window.open {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    /* Custom scrollbar */
+    .messages-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .messages-container::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .messages-container::-webkit-scrollbar-thumb {
+        background: #e2e8f0;
+        border-radius: 10px;
+    }
+</style>
+
+<!-- <body class="bg-slate-200"> -->
+
+<button id="chat-button" class="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 shadow-2xl flex items-center justify-center text-white hover:scale-110 transition-transform">
+    <i data-lucide="message-circle" class="w-7 h-7"></i>
+    <span class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></span>
+</button>
+
+<div id="chat-window" class="chat-window fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)] h-[600px] max-h-[calc(100vh-100px)] bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+
+    <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-5">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+                    <i data-lucide="sparkles" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white text-sm">Asistente CompuPlaza</h3>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-xs text-slate-400">En línea</span>
+                    </div>
+                </div>
+            </div>
+            <button id="close-chat" class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="messages-container" class="messages-container flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
+        <div class="flex gap-3">
+            <div class="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center flex-shrink-0 text-slate-600">
+                <i data-lucide="bot" class="w-4 h-4"></i>
+            </div>
+            <div class="max-w-[75%] rounded-2xl px-4 py-3 bg-white text-slate-700 shadow-sm rounded-bl-md">
+                <p class="text-sm leading-relaxed">¡Hola! 👋 Soy el asistente virtual de Compuplaza. ¿En qué puedo ayudarte hoy?</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="quick-questions" class="px-4 py-3 bg-white border-t border-slate-100">
+        <p class="text-xs text-slate-500 mb-2">Preguntas frecuentes:</p>
+        <div class="flex flex-wrap gap-2">
+            <button onclick="sendQuickQuestion('¿Cuáles son sus servicios?')" class="text-xs px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 hover:bg-amber-100 hover:text-amber-700 transition-colors">Servicios</button>
+            <button onclick="sendQuickQuestion('¿Cuál es su horario?')" class="text-xs px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 hover:bg-amber-100 hover:text-amber-700 transition-colors">Horario</button>
+            <button onclick="sendQuickQuestion('¿Dónde están ubicados?')" class="text-xs px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 hover:bg-amber-100 hover:text-amber-700 transition-colors">Ubicación</button>
+        </div>
+    </div>
+
+    <div class="p-4 bg-white border-t border-slate-100">
+        <form id="chat-form" class="flex gap-2">
+            <input id="chat-input" type="text" placeholder="Escribe tu mensaje..." class="flex-1 h-12 px-4 rounded-xl border border-slate-200 focus:outline-none focus:border-amber-500 text-sm">
+            <button type="submit" class="h-12 w-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg flex items-center justify-center hover:opacity-90">
+                <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Inicializar iconos
+    lucide.createIcons();
+
+    const chatButton = document.getElementById('chat-button');
+    const chatWindow = document.getElementById('chat-window');
+    const closeChat = document.getElementById('close-chat');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const messagesContainer = document.getElementById('messages-container');
+    const quickQuestions = document.getElementById('quick-questions');
+
+    // Toggle Chat
+    chatButton.addEventListener('click', () => {
+        chatWindow.classList.add('open');
+        chatButton.classList.add('hide');
+    });
+
+    closeChat.addEventListener('click', () => {
+        chatWindow.classList.remove('open');
+        chatButton.classList.remove('hide');
+    });
+
+    function appendMessage(role, content) {
+        const isUser = role === 'user';
+        const html = `
+                <div class="flex gap-3 ${isUser ? 'flex-row-reverse' : ''}">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${isUser ? 'bg-amber-500 text-white' : 'bg-slate-200 text-slate-600'}">
+                        <i data-lucide="${isUser ? 'user' : 'bot'}" class="w-4 h-4"></i>
+                    </div>
+                    <div class="max-w-[75%] rounded-2xl px-4 py-3 ${isUser ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-br-md' : 'bg-white text-slate-700 shadow-sm rounded-bl-md'}">
+                        <p class="text-sm leading-relaxed">${content}</p>
+                    </div>
+                </div>
+            `;
+        messagesContainer.insertAdjacentHTML('beforeend', html);
+        lucide.createIcons(); // Re-renderizar iconos
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        // Ocultar preguntas rápidas tras el primer mensaje del usuario
+        if (isUser) quickQuestions.classList.add('hide');
+    }
+
+    function showLoading() {
+        const html = `
+                <div id="loading-indicator" class="flex gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center">
+                        <i data-lucide="bot" class="w-4 h-4 text-slate-600"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl rounded-bl-md px-4 py-3 shadow-sm flex items-center gap-2">
+                        <div class="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+                        <span class="text-sm text-slate-500">Escribiendo...</span>
+                    </div>
+                </div>
+            `;
+        messagesContainer.insertAdjacentHTML('beforeend', html);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    async function handleSend(text) {
+        if (!text.trim()) return;
+
+        appendMessage('user', text);
+        showLoading();
+
+        // Simulación de llamada a la API (Sustituye por tu base44.integrations)
+        try {
+            // AQUÍ iría tu llamada fetch a la API de NexusCorp
+            setTimeout(() => {
+                document.getElementById('loading-indicator')?.remove();
+                appendMessage('assistant', "Gracias por tu mensaje. Como soy una demo estática, no puedo conectar con el servidor de NexusCorp, pero estoy listo para que me conectes.");
+            }, 1500);
+        } catch (error) {
+            document.getElementById('loading-indicator')?.remove();
+            appendMessage('assistant', 'Lo siento, hubo un error.');
+        }
+    }
+
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = chatInput.value;
+        chatInput.value = '';
+        handleSend(text);
+    });
+
+    function sendQuickQuestion(text) {
+        handleSend(text);
+    }
+</script>

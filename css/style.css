@@ -1,0 +1,38 @@
+/* Configuración General de Secciones */
+.master-seccion {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s ease; /* Tu transición estándar */
+}
+
+/* Estilo de Títulos Dinámicos */
+.seccion-titulo {
+    color: rgb(0, 18, 103);
+    font-weight: 800;
+    font-size: 2.2rem;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+}
+
+/* Línea decorativa debajo del título */
+.title-divider {
+    width: 60px;
+    height: 4px;
+    background-color: rgb(237, 87, 29); /* Tu naranja de marca */
+    border-radius: 2px;
+}
+
+/* Variantes de Color de Fondo para reutilizar */
+.bg-light-gray { background-color: #f8f9fa; }
+.bg-dark-brand { background-color: rgb(0, 18, 103); color: white; }
+
+/* Ajuste de espaciado para móviles */
+@media (max-width: 768px) {
+    .seccion-titulo {
+        font-size: 1.8rem;
+    }
+    .master-seccion {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+}
