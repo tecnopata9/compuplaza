@@ -7,25 +7,28 @@
     <title>Grupo CompuPlaza SAC</title>
 
     <!-- ESTILOS CSS -->
+    
     <link rel="ico" href="/img/icono.ico">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!--
     <link href="lib/css/tailwind.css" rel="stylesheet">     
     <link rel="stylesheet" href="node_modules/aos/dist/aos.css"> 
     <link rel="stylesheet" href="css/style.css"> 
-    <link rel="stylesheet" href="dist/output.css"> 
+    <link rel="stylesheet" href="dist/output.css"> -->
 
     <!-- ESTILOS JS -->
+    <!--
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="node_modules/aos/dist/aos.js"></script>
     <script src="node_modules/lucide/dist/umd/lucide.js"></script>
     <script defer src="node_modules/alpinejs/dist/cdn.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js"></script>  -->
     
-    <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>    
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>     -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>  
 
 </head>
 
@@ -82,5 +85,6 @@
     ?>
 
 </body>
+
 
 </html>
